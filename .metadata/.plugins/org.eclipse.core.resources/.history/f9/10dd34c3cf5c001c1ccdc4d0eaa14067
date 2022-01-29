@@ -1,0 +1,110 @@
+package DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import model.Facture;
+
+public class FactureDAO {
+	
+public static void CREATE(Facture f) {
+	try{
+	
+			String query = "INSERT INTO Facture (numero,montant ,date) VALUES (?,?,?)";
+			PreparedStatement Stmt = SConnection.getInstance().prepareStatement(query);
+		      Stmt.setString (1, f.getNumero());
+		      Stmt.setDouble (2,f.getMontant());
+		      Stmt.setDate(3,f.getDate());
+		      
+		      Stmt.execute();
+		      
+		      SConnection.close();
+			
+		      System.out.println("Facture numero "+ f.getNumero() + " est ajoute avec succees!" );
+		
+
+		
+
+	}
+	catch(SQLException e) {System.out.println(e.getMessage());}
+}
+
+public static Facture findByNum(String id) { //READ
+	String rq="select * from facture where numero=?";
+	Facture f= null;
+	Connection cnx= SConnection.getInstance();
+	PreparedStatement st;
+	try {
+		st=cnx.prepareStatement(rq);
+		st.setString(1, id);
+		ResultSet res= st.executeQuery();
+		if(res.next())
+			f=new Facture(res.getString(1),res.getDouble(2),res.getDate(3));
+		
+	
+		st.close();
+	} catch (SQLException e) {
+		System.out.println("La requete1 n'a pas pu etre executee ");
+	}
+	return f;
+}
+
+public static void UPDATEmontant(Facture f , double montant ) {
+	int n=0;
+	String rq1="update Facture set montant= ? where numero=?";
+	Connection cnx= SConnection.getInstance();
+	PreparedStatement st;
+	try {
+
+		st=cnx.prepareStatement(rq1);
+		st.setDouble(1,montant);
+		st.setString(2,f.getNumero());
+		n= st.executeUpdate();
+		st.close();
+		if(n==1) {
+			System.out.println("Mise a jour du Facture avec succes ");
+		}
+	} catch (SQLException e) {
+		System.out.println("Mise a jour du Facture a echoue ");
+	}
+	if(n==0)
+	{try {
+		String query = "INSERT INTO Facture (numero,montant ,date) VALUES (?,?,?)";
+		PreparedStatement Stmt = SConnection.getInstance().prepareStatement(query);
+	      Stmt.setString (1, f.getNumero());
+	      Stmt.setDouble (2,f.getMontant());
+	      Stmt.setDate(3,f.getDate());
+	      
+	      Stmt.execute();
+	      
+	      SConnection.close();
+		
+			System.out.println("ajout du Facture avec succes ");
+
+	} catch (SQLException e) {
+		System.out.println("L'ajout du Facture a echoue ");
+	}
+	}
+}
+
+public static  void DELETE(String num) {
+	int n=0;
+	String rq="Delete from Facture where numero=?";
+	Connection cnx= SConnection.getInstance();
+	PreparedStatement st;
+	try {
+		st=cnx.prepareStatement(rq);
+		st.setString(1, num);
+		n= st.executeUpdate();
+		if(n==1)
+			System.out.println("Le Facture a ete archive avec succes ");
+		else 
+			System.out.println("Aucun Facture n'a ete archive  ");
+		st.close();
+	}catch(SQLException e) {
+		System.out.println("La requete delete n'a pas pu etre executee");
+	}
+}
+}

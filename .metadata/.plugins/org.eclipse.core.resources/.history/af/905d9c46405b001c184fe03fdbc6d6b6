@@ -1,0 +1,59 @@
+
+package model;
+
+import java.sql.Time;
+import java.sql.Date;
+
+public class PlageHoraire {
+
+	private int numero;
+	private Date date;
+	private Time heureDebut;
+	private Time heureFin;
+
+	public PlageHoraire(int numero, Date date, Time heureDebut, Time heureFin) {
+		super();
+		this.numero = numero;
+		this.date = date;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+	}
+	public PlageHoraire() {
+		super();
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Time getHeureDebut() {
+		return heureDebut;
+	}
+	public void setHeureDebut(Time heureDebut) {
+		this.heureDebut = heureDebut;
+	}
+	public Time getHeureFin() {
+		return heureFin;
+	}
+	public void setHeureFin(Time heureFin) {
+		this.heureFin = heureFin;
+	}
+	public void ReserverPlage() {
+
+	}
+	public void LibererPlage() {
+
+	}
+	public boolean EstLibre() {
+		return true;		
+	}
+
+}

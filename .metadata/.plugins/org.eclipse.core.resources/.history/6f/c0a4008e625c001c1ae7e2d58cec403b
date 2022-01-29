@@ -1,0 +1,25 @@
+package Test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import org.junit.Test;
+import model.*;
+
+public class TestTest {
+
+	@Test
+	public void test() {
+
+		Salle s1 = new Salle(995, 14, 220);
+		
+		
+		assertEquals(100,Reservation.CalculPrixLocation((double)12,new LocalTime(15,11,0, 0) , new LocalTime(15,11,0, 0)
+, s1));
+		
+	}
+
+}
